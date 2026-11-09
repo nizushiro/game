@@ -4,13 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>🎲Zgadnij liczbę🎲</title>
+    <link rel="stylesheet" href="index.css">
 </head>
 <body>
     
-</body>
-</html>
-
-
 
 
 <?php
@@ -19,7 +16,7 @@ session_start();
 if (isset($_POST["start"])) {
 
     $poziom = $_POST["poziom"];
-
+    $_SESSION['poziom'] = $poziom;
     if ($poziom == "latwy") {
         $_SESSION["liczba"] = rand(1, 50);
         $_SESSION["proby"] = 10;
@@ -69,13 +66,42 @@ if (isset($_POST["zgadnij"])) {
     <h3>Wybierz poziom:</h3>
 
     <select name="poziom">
+        <?php
 
-        <option value="latwy">Łatwy - 1-50 - 10 prób</option>
-        <option value="sredni">Średni - 1-100 - 10 prób</option>
-        <option value="trudny">Trudny - 1-500 - 10 prób</option>
+            if($_SESSION['poziom'] === 'latwy'){
+                echo "
+                <option value='latwy' selected >Łatwy - 1-50 - 10 prób</option>
+                <option value='sredni'>Średni - 1-100 - 10 prób</option>
+                <option value='trudny'>Trudny - 1-500 - 10 prób</option>";
+            }
+            if($_SESSION['poziom'] === 'sredni'){
+                echo "
+                <option value='latwy'  >Łatwy - 1-50 - 10 prób</option>
+                <option value='sredni'selected>Średni - 1-100 - 10 prób</option>
+                <option value='trudny'>Trudny - 1-500 - 10 prób</option>";
+            }
+            if($_SESSION['poziom'] === 'trudny'){
+                echo "
+                <option value='latwy'  >Łatwy - 1-50 - 10 prób</option>
+                <option value='sredni'>Średni - 1-100 - 10 prób</option>
+                <option value='trudny'selected>Trudny - 1-500 - 10 prób</option>";
+            }
+            
+        ?>
 
     </select>
 
     <button name="start">🎮Rozpocznij grę</button>
 
 </form>
+<form method="POST">
+
+    <p>Podaj liczbę:</p>
+
+    <input type="number" name="strzal">
+
+    <button name="zgadnij">Zgadnij</button>
+
+</form>
+</body>
+</html>
